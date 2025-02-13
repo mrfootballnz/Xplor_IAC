@@ -16,6 +16,10 @@ set-NetFirewallProfile -All -Enabled False
 $driveletters = @('D', 'E', 'L', 'T')  # Predefined drive letters
 $labels = @('Application', 'Data', 'Logs', 'TempDB')  # Corresponding labels
 
+Write-Log 'Loading the SSH KEY'
+$Key_content = Get-Content "$($env:TEMP)\ssh_key.key" 
+Write-Log 'Loaded SSH KEy'
+Write-Log 'key:' + $Key_content
 # Function to check if a disk is uninitialized
 function Is-DiskUninitialized {
     param([int]$DiskNumber)
@@ -81,7 +85,7 @@ Set-Service -Name sshd -StartupType 'Automatic'
 #create default shell
 New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
 #Create the authorized public key for openssh
-New-Item -Path "C:\ProgramData\ssh\" -Name "administrators_authorized_keys" -ItemType "file" -Value "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA0Pfu8dYjZw3dnO+38+hM2nQ+prlstFz2lvFYcgk/gQ ansible@dsnzans01.adfit.co.nz"
+New-Item -Path "C:\ProgramData\ssh\" -Name "administrators_authorized_keys" -ItemType "file" -Value $Key_content
 #Create the sshd_config file for openssh
 Set-Content -Path "C:\ProgramData\ssh\sshd_config" -Value "# This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
