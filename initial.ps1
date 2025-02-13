@@ -17,7 +17,7 @@ $driveletters = @('D', 'E', 'L', 'T')  # Predefined drive letters
 $labels = @('Application', 'Data', 'Logs', 'TempDB')  # Corresponding labels
 
 Write-Log 'Loading the SSH KEY'
-$Key_content = Get-Content "$($env:TEMP)\ssh_key.key" 
+$Key_content = Get-Content "C:\ssh_key.key" 
 Write-Log 'Loaded SSH KEy'
 Write-Log 'key:' + $Key_content
 # Function to check if a disk is uninitialized
