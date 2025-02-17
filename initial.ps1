@@ -3,7 +3,7 @@ function Write-Log {
         $message
     )
     $date = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-    $logpath = "$($env:TEMP)\$($date).log"
+    $logpath = "C:\$($date).log"
     Add-Content -Path $logpath -Value "$date`t$message"
     Write-Host "$date`t$message"
 }
